@@ -46,7 +46,7 @@ export default {
 		},
 		rate() {
 			return this.selectedCoach.hourlyRate;
-		},
+		}, 
 		description() {
 			return this.selectedCoach.description;
 		},
