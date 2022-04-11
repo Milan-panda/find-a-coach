@@ -61,4 +61,11 @@ AIzaSyB4yrcXQlkZ74EeIu7NcKFCxIG3EOn2su0`,
 			tokenExpiration: responseData.expiresIn,
 		});
 	},
+	logout(context) {
+		context.commit('setUser', {
+			token: null,
+			userId: null,
+			tokenExpiration: null,
+		});
+	},
 };

@@ -14,8 +14,10 @@ export default {
 
 		const responseData = await response.json();
 
-		if(!response.ok){
-			const error = new Error(responseData.message || 'Failed to send request.');
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to send request.'
+			);
 			throw error;
 		}
 
@@ -24,28 +26,33 @@ export default {
 
 		context.commit('addRequest', newRequest);
 	},
-	async fetchRequests(context){
+	async fetchRequests(context) {
 		const coachId = context.rootGetters.userId;
+		const token = context.rootGetters.token;
 		const response = await fetch(
-			`https://coach-project-demo-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json`);
+			`https://coach-project-demo-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${coachId}.json?auth=` +
+				token
+		);
 		const responseData = await response.json();
 
-		if(!response.ok){
-			const error = new Error(responseData.message || 'Failed to fetch requests.');
+		if (!response.ok) {
+			const error = new Error(
+				responseData.message || 'Failed to fetch requests.'
+			);
 			throw error;
 		}
 
 		const requests = [];
-		for(const key in responseData){
+		for (const key in responseData) {
 			const request = {
 				id: key,
 				coachId: coachId,
 				userEmail: responseData[key].userEmail,
-				message: responseData[key].message
+				message: responseData[key].message,
 			};
 			requests.push(request);
 		}
 
 		context.commit('setRequests', requests);
-	}
+	},
 };

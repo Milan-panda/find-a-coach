@@ -9,8 +9,11 @@ export default {
 			areas: data.areas,
 		};
 
+		const token = context.rootGetters.token;
+
 		const response = await fetch(
-			`https://coach-project-demo-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json`,
+			`https://coach-project-demo-default-rtdb.asia-southeast1.firebasedatabase.app/coaches/${userId}.json?auth=` +
+				token,
 			{
 				method: `PUT`,
 				body: JSON.stringify(coachData),
